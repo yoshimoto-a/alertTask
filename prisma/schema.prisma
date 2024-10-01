@@ -1,0 +1,79 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+  datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model Room {
+  id          String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  apiToken    String
+  groupName   String
+  created     DateTime @default(now())
+  adminUserId String   @db.Uuid
+  adminUser   AdminUser @relation(fields: [adminUserId], references: [id])
+
+  // RoomTaskとのリレーション
+  roomTasks   RoomTask[]
+}
+
+model Task {
+  id        Int      @id @default(autoincrement())
+  date      DateTime
+  // RoomTaskとのリレーション
+  roomTasks RoomTask[]
+
+  // Notificationとのリレーション
+  notifications Notification[]
+}
+
+model AdminUser {
+  id    String @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  email String
+
+  // Roomとのリレーション
+  rooms Room[]
+}
+
+model RoomTask {
+  roomId String @db.Uuid
+  taskId Int
+
+  // Roomとのリレーション
+  room   Room @relation(fields: [roomId], references: [id])
+
+  // Taskとのリレーション
+  task   Task @relation(fields: [taskId], references: [id])
+
+  @@id([roomId, taskId]) // 複合主キー
+}
+
+model Notification {
+  taskId           Int
+  notificationType String
+
+  // Taskとのリレーション
+  task Task @relation(fields: [taskId], references: [id])
+
+  // Scheduleとのリレーション
+  schedules Schedule[]
+
+  @@id([taskId, notificationType]) // 複合主キー
+}
+
+model Schedule {
+  id              Int  @id @default(autoincrement())
+  notificationId  Int  // Notificationとのリレーション
+  notificationType String  // Notificationの複合キーの一部
+
+  notification    Notification @relation(fields: [notificationId, notificationType], references: [taskId, notificationType])
+
+  daysBefore  Int
+  hour        Int
+}
