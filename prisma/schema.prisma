@@ -36,7 +36,7 @@ model Task {
 model AdminUser {
   id    String @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
   email String
-
+  supabaseUserId String @unique
   // Roomとのリレーション
   rooms Room[]
 }

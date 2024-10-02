@@ -34,7 +34,7 @@ export const Input = ({
   register,
 }: Props) => {
   return (
-    <div>
+    <div className="pb-5">
       <label>{label}</label>
       <input
         className="bg-custom-gray py-2 px-3 mb-1 text-gray-700 leading-tight w-full border-[1px] rounded-lg"
@@ -46,7 +46,7 @@ export const Input = ({
         {...register}
       />
       {errors && typeof errors.message === "string" && (
-        <p className="mb-5 text-sm text-red-500">{errors.message}</p>
+        <p className="text-sm text-red-500">{errors.message}</p>
       )}
     </div>
   );
