@@ -5,8 +5,12 @@ import {
   getCoreRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { useRooms } from "../_hooks/useRooms";
 import { Room } from "@/app/_types/admin/room/IndexResponse";
+import { IndexResponse } from "@/app/_types/admin/room/IndexResponse";
+import { faTrash, faCircleXmark } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useApi } from "@/app/_hooks/useApi";
+import { KeyedMutator } from "swr";
 const columnHelper = createColumnHelper<Room>();
 const columns = [
   columnHelper.accessor("id", {
@@ -22,20 +26,30 @@ const columns = [
     cell: info => info.getValue(),
   }),
 ];
+interface Props {
+  data: IndexResponse;
 
-export const RoomIndex: React.FC = () => {
-  const { data, isLoading, error } = useRooms();
+  mutate: KeyedMutator<IndexResponse | undefined>;
+}
+
+export const RoomIndex: React.FC<Props> = ({ data, mutate }) => {
   const table = useReactTable({
-    data: data?.rooms || [],
+    data: data.rooms || [],
     columns,
     getCoreRowModel: getCoreRowModel(),
   });
+  const { del } = useApi();
+  const deleteRoom = async (id: string) => {
+    const result = confirm("削除しますか？");
+    if (!result) return;
+    try {
+      await del(`/api/admin/room/${id}`);
+      mutate();
+    } catch (e) {
+      alert(e);
+    }
+  };
 
-  if (isLoading) return <div className="text-center">データ取得中...</div>;
-  if (error)
-    return <div className="text-center">データの取得に失敗しました</div>;
-  if (data?.rooms.length === 0)
-    return <div className="text-center">データがありません</div>;
   return (
     <div className="flex justify-center items-center pt-10">
       <table className="table-fixed mb-10">
@@ -56,6 +70,9 @@ export const RoomIndex: React.FC = () => {
                   </th>
                 );
               })}
+              <th>
+                <FontAwesomeIcon icon={faTrash} className="text-sm px-2" />
+              </th>
             </tr>
           ))}
         </thead>
@@ -63,8 +80,7 @@ export const RoomIndex: React.FC = () => {
           {table.getRowModel().rows.map(row => (
             <tr
               key={row.id}
-              className="border-b-[1px] border-gray_bg cursor-pointer hover:bg-gray_bg "
-              onClick={() => {}}
+              className="border-b-[1px] border-gray_bg hover:bg-gray_bg "
             >
               {row.getVisibleCells().map(cell => {
                 const columnContent = flexRender(
@@ -77,6 +93,17 @@ export const RoomIndex: React.FC = () => {
                   </td>
                 );
               })}
+              <td
+                onClick={() => {
+                  deleteRoom(row.getValue("id"));
+                }}
+                className="cursor-pointer"
+              >
+                <FontAwesomeIcon
+                  icon={faCircleXmark}
+                  className="text-sm px-2"
+                />
+              </td>
             </tr>
           ))}
         </tbody>

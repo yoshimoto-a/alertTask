@@ -1,8 +1,12 @@
 "use client";
 import { Button } from "@/app/_components/Button";
 import { useNewRoom } from "../_hooks/useNewRoom";
-export const NewRoomForm: React.FC = () => {
-  const { register, errors, handleSubmit, isSubmitting } = useNewRoom();
+import { KeyedMutator } from "swr";
+import { IndexResponse } from "@/app/_types/admin/room/IndexResponse";
+export const NewRoomForm: React.FC<{
+  mutate: KeyedMutator<IndexResponse | undefined>;
+}> = ({ mutate }) => {
+  const { register, errors, handleSubmit, isSubmitting } = useNewRoom(mutate);
 
   return (
     <div className="flex justify-end pr-24 py-2">
