@@ -18,7 +18,8 @@ model Room {
   created     DateTime @default(now())
   adminUserId String   @db.Uuid
   adminUser   AdminUser @relation(fields: [adminUserId], references: [id])
-
+  roomUrlId   String   @unique
+  password    String
   // RoomTaskとのリレーション
   roomTasks   RoomTask[]
 }
