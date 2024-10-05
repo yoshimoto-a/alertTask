@@ -2,5 +2,5 @@
 import { useRouter } from "next/navigation";
 export default function Home() {
   const router = useRouter();
-  router.replace("/admin/signup");
+  router.replace("/admin/login");
 }

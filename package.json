@@ -9,14 +9,18 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@fortawesome/free-solid-svg-icons": "^6.6.0",
+    "@fortawesome/react-fontawesome": "^0.2.2",
     "@hookform/resolvers": "^3.9.0",
     "@prisma/client": "^5.20.0",
     "@supabase/supabase-js": "^2.45.4",
+    "@tanstack/react-table": "^8.20.5",
     "next": "14.2.13",
     "react": "^18",
     "react-dom": "^18",
     "react-hook-form": "^7.53.0",
     "react-hot-toast": "^2.4.1",
+    "react-modal": "^3.16.1",
     "swr": "^2.2.5",
     "zod": "^3.23.8"
   },
@@ -24,6 +28,7 @@
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@types/react-modal": "^3.16.3",
     "eslint": "^8",
     "eslint-config-next": "14.2.13",
     "postcss": "^8",

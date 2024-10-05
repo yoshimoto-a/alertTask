@@ -48,7 +48,11 @@ export const useApi = () => {
         body: JSON.stringify(payload),
       });
 
-      if (response.status !== 200) throw new Error("登録に失敗しました。");
+      if (response.status !== 200) {
+        const errorData = await response.json();
+        const errorMessage = errorData.message || "登録に失敗しました。";
+        throw new Error(errorMessage);
+      }
 
       const data: ResponseType = await response.json();
 
