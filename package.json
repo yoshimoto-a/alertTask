@@ -21,6 +21,7 @@
     "react-hook-form": "^7.53.0",
     "react-hot-toast": "^2.4.1",
     "react-modal": "^3.16.1",
+    "react-select": "^5.8.1",
     "swr": "^2.2.5",
     "zod": "^3.23.8"
   },
