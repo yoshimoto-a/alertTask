@@ -1,7 +1,7 @@
 import { type NextRequest } from "next/server";
 import { buildPrisma } from "@/app/_utils/prisma";
 import { supabase } from "@/app/_utils/supabase";
-import { PostRequest } from "@/app/_types/admin/room/PostRequest";
+import { PostRequest } from "@/app/_types/admin/rooms/PostRequest";
 import { getGroupName } from "./_utils/getGroupName";
 import { randomBytes } from "crypto";
 
@@ -61,19 +61,17 @@ export const GET = async (req: NextRequest) => {
   const { data, error } = await supabase.auth.getUser(token);
   if (error) return Response.json({ status: 401, message: "Unauthorized" });
   try {
-    const getUser = await prisma.adminUser.findUnique({
+    const getUserWithRooms = await prisma.adminUser.findUnique({
       where: {
         supabaseUserId: data.user.id,
       },
-    });
-    const rooms = await prisma.room.findMany({
-      where: {
-        adminUserId: getUser?.id,
+      include: {
+        rooms: true,
       },
     });
     return Response.json(
       {
-        rooms,
+        rooms: getUserWithRooms?.rooms,
       },
       { status: 200 }
     );

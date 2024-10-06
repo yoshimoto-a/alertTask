@@ -5,8 +5,8 @@ import {
   getCoreRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { Room } from "@/app/_types/admin/room/IndexResponse";
-import { IndexResponse } from "@/app/_types/admin/room/IndexResponse";
+import { Room } from "@/app/_types/admin/rooms/IndexResponse";
+import { IndexResponse } from "@/app/_types/admin/rooms/IndexResponse";
 import { faTrash, faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useApi } from "@/app/_hooks/useApi";
@@ -36,8 +36,8 @@ const columns = [
           <span className="">***************</span>
           <button
             className="bg-slate-800 text-white px-3 pb-2 pt-1 ml-2 rounded-md"
-            onClick={() => {
-              navigator.clipboard.writeText(url);
+            onClick={async () => {
+              await navigator.clipboard.writeText(url);
               toast.success("クリップボードに保存しました");
             }}
           >
