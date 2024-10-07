@@ -25,19 +25,15 @@ export const TaskDetailModal: React.FC<Props> = ({
   const deleteTask = async () => {
     const result = confirm("削除しますか？");
     if (!result) return;
+    if (!taskId) return;
     const roomIdInUrl = params?.id;
     try {
-      const resp = await del<{ message: string }>(
-        `/api/room/${roomIdInUrl}/${taskId}`
-      );
-      console.log(resp);
+      await del<{ message: string }>(`/api/room/${roomIdInUrl}/${taskId}`);
       onClose();
-      console.log(isOpen);
       mutate();
       toast.success("タスクを削除しました");
     } catch (e) {
-      console.log(e);
-      toast.error("削除に失敗しました");
+      toast.error(`削除に失敗しました${e}`);
     }
   };
   return (
