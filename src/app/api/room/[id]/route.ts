@@ -9,57 +9,56 @@ export async function POST(
   const prisma = await buildPrisma();
 
   try {
-    //urlからroomid取得
-    const roomUrlId = params.id;
-    const roomData = await prisma.room.findUnique({
-      where: {
-        roomUrlId,
-      },
-    });
-    if (!roomData) {
-      return NextResponse.json(
-        { message: "ルームが存在しません" },
-        { status: 400 }
-      );
-    }
+    const taskId = await prisma.$transaction(async prisma => {
+      //urlからroomid取得
+      const roomUrlId = params.id;
+      const roomData = await prisma.room.findUnique({
+        where: {
+          roomUrlId,
+        },
+      });
+      if (!roomData) {
+        return NextResponse.json(
+          { message: "ルームが存在しません" },
+          { status: 400 }
+        );
+      }
 
-    //タスクを登録
-    const body: PostRequest = await req.json();
-    const TaskData = await prisma.task.create({
-      data: {
-        date: body.date,
-        task: body.task,
-      },
-    });
+      //タスクを登録
+      const body: PostRequest = await req.json();
+      const TaskData = await prisma.task.create({
+        data: {
+          date: body.date,
+          task: body.task,
+        },
+      });
 
-    //タスクとルームの中間テーブル
-    await prisma.roomTask.create({
-      data: {
-        roomId: roomData?.id,
-        taskId: TaskData?.id,
-      },
-    });
+      //タスクとルームの中間テーブル
+      await prisma.roomTask.create({
+        data: {
+          roomId: roomData?.id,
+          taskId: TaskData?.id,
+        },
+      });
 
-    //タスクとスケジュールを紐づける中間テーブル
-    const notificationData = await prisma.notification.create({
-      data: {
-        taskId: TaskData.id,
-      },
-    });
+      //タスクとスケジュールを紐づける中間テーブル
+      const notificationData = await prisma.notification.create({
+        data: {
+          taskId: TaskData.id,
+        },
+      });
 
-    //通知のスケジュール登録
-    await prisma.schedule.createMany({
-      data: body.schedules.map(schedule => ({
-        daysBefore: schedule.daysBefore,
-        hour: schedule.hour,
-        notificationId: notificationData.id,
-      })),
+      //通知のスケジュール登録
+      await prisma.schedule.createMany({
+        data: body.schedules.map(schedule => ({
+          daysBefore: schedule.daysBefore,
+          hour: schedule.hour,
+          notificationId: notificationData.id,
+        })),
+      });
+      return TaskData.id;
     });
-
-    return NextResponse.json(
-      { message: "OK", id: TaskData.id },
-      { status: 200 }
-    );
+    return NextResponse.json({ message: "OK", id: taskId }, { status: 200 });
   } catch (error) {
     if (error instanceof Error) {
       return NextResponse.json({ status: error.message }, { status: 400 });
@@ -67,7 +66,10 @@ export async function POST(
   }
 }
 
-export const GET = async ({ params }: { params: { id: string } }) => {
+export const GET = async (
+  req: NextRequest,
+  { params }: { params: { id: string } }
+) => {
   const prisma = await buildPrisma();
   try {
     //urlからroomid取得
