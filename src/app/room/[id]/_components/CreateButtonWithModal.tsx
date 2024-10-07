@@ -14,11 +14,16 @@ import { PostResponse } from "@/app/_types/room/[id]/PostResponse";
 import { useParams } from "next/navigation";
 import { Button } from "@/app/_components/Button";
 import toast, { Toaster } from "react-hot-toast";
+import { KeyedMutator } from "swr";
+import { IndexResponse } from "@/app/_types/room/[id]/IndexResponse";
 interface Task {
   date: Date;
   task: string;
 }
-export const CreateButtonWithModal: React.FC = () => {
+interface Props {
+  mutate: KeyedMutator<IndexResponse | undefined>;
+}
+export const CreateButtonWithModal: React.FC<Props> = ({ mutate }) => {
   const defaultSchedule = [
     { daysBefore: "1", hour: { value: 20, label: "20時" } },
   ];
@@ -59,6 +64,7 @@ export const CreateButtonWithModal: React.FC = () => {
           hour: Number(item.hour?.value),
         })),
       });
+      mutate();
       onClose();
       toast.success("登録に成功しました");
     } catch (e) {
