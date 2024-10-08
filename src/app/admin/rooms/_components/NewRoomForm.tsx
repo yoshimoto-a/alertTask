@@ -2,7 +2,7 @@
 import { Button } from "@/app/_components/Button";
 import { useNewRoom } from "../_hooks/useNewRoom";
 import { KeyedMutator } from "swr";
-import { IndexResponse } from "@/app/_types/admin/room/IndexResponse";
+import { IndexResponse } from "@/app/_types/admin/rooms/IndexResponse";
 import { Modal } from "@/app/_components/Modal";
 import { faPlusCircle, faXmarkCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
