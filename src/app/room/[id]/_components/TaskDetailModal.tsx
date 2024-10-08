@@ -42,12 +42,12 @@ export const TaskDetailModal: React.FC<Props> = ({
       <Modal isOpen={isOpen} onClose={onClose} className="">
         <form className="">
           <div className="flex justify-end">
-            <button onClick={onClose}>
+            <button onClick={onClose} type="button">
               <FontAwesomeIcon icon={faXmarkCircle} className="" />
             </button>
           </div>
           <div className="flex justify-end">
-            <button onClick={deleteTask}>
+            <button onClick={deleteTask} type="button">
               <FontAwesomeIcon icon={faTrashCan} className="text-2xl" />
             </button>
           </div>
