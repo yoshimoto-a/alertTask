@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { buildPrisma } from "@/app/_utils/prisma";
 import { PostRequest } from "@/app/_types/room/[id]/PostRequest";
-
+import { calculateTargetDateTime } from "./_utils/calculateTargetDateTime";
 export async function POST(
   req: NextRequest,
   { params }: { params: { id: string } }
@@ -26,10 +26,11 @@ export async function POST(
 
       //タスクを登録
       const body: PostRequest = await req.json();
+      const { date, task } = body;
       const TaskData = await prisma.task.create({
         data: {
-          date: body.date,
-          task: body.task,
+          date: date,
+          task: task,
         },
       });
 
@@ -53,6 +54,11 @@ export async function POST(
         data: body.schedules.map(schedule => ({
           daysBefore: schedule.daysBefore,
           hour: schedule.hour,
+          datetime: calculateTargetDateTime(
+            date,
+            schedule.daysBefore,
+            schedule.hour
+          ),
           notificationId: notificationData.id,
         })),
       });

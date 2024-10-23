@@ -2,75 +2,28 @@
 import { faCirclePlus, faXmarkCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Modal } from "@/app/_components/Modal";
-import { useState } from "react";
 import { Schedule } from "./Schedule";
-import { ScheduleType } from "../_types/schedule";
-import { useApi } from "@/app/_hooks/useApi";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
-import { useForm } from "react-hook-form";
-import { PostRequest } from "@/app/_types/room/[id]/PostRequest";
-import { PostResponse } from "@/app/_types/room/[id]/PostResponse";
-import { useParams } from "next/navigation";
 import { Button } from "@/app/_components/Button";
-import toast, { Toaster } from "react-hot-toast";
+import { Toaster } from "react-hot-toast";
 import { KeyedMutator } from "swr";
 import { IndexResponse } from "@/app/_types/room/[id]/IndexResponse";
-interface Task {
-  date: Date;
-  task: string;
-}
+import { useControlTask } from "../_hooks/useControlTask";
+
 interface Props {
   mutate: KeyedMutator<IndexResponse | undefined>;
 }
 export const CreateButtonWithModal: React.FC<Props> = ({ mutate }) => {
-  const defaultSchedule = [
-    { daysBefore: "1", hour: { value: 20, label: "20時" } },
-  ];
-  const [schedules, setSchedules] = useState<ScheduleType[]>(defaultSchedule);
-  const { post } = useApi();
-  const [isOpen, setIsOpen] = useState(false);
-  const params = useParams();
-  const schema = z.object({
-    date: z.string().min(1, { message: "日付は必須です" }),
-    task: z.string().min(1, { message: "予定は必須です" }),
-  });
   const {
+    isOpen,
+    setIsOpen,
     register,
+    onClose,
     handleSubmit,
-    formState: { errors, isSubmitting },
-    reset,
-  } = useForm<Task>({
-    resolver: zodResolver(schema),
-    mode: "onSubmit",
-  });
-  const onClose = () => {
-    setIsOpen(false);
-    reset();
-    setSchedules(defaultSchedule);
-  };
-  const onSubmit = async (formdata: Task) => {
-    const roomIdInUrl = params?.id;
-    try {
-      const dateObject = new Date(formdata.date);
-      if (isNaN(dateObject.getTime())) {
-        throw new Error("無効な日付です");
-      }
-      await post<PostRequest, PostResponse>(`/api/room/${roomIdInUrl}`, {
-        date: dateObject,
-        task: formdata.task,
-        schedules: schedules.map(item => ({
-          daysBefore: Number(item.daysBefore),
-          hour: Number(item.hour?.value),
-        })),
-      });
-      mutate();
-      onClose();
-      toast.success("登録に成功しました");
-    } catch (e) {
-      toast.error(`登録に失敗しました：${e}`);
-    }
-  };
+    errors,
+    isSubmitting,
+    schedules,
+    setSchedules,
+  } = useControlTask(mutate, null, null);
 
   return (
     <div>
@@ -79,7 +32,7 @@ export const CreateButtonWithModal: React.FC<Props> = ({ mutate }) => {
         <FontAwesomeIcon icon={faCirclePlus} className="" />
       </button>
       <Modal isOpen={isOpen} onClose={onClose} className="">
-        <form className="" onSubmit={handleSubmit(onSubmit)}>
+        <form className="" onSubmit={handleSubmit}>
           <div className="flex justify-end">
             <button onClick={onClose}>
               <FontAwesomeIcon icon={faXmarkCircle} className="" />

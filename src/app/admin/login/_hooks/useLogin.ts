@@ -1,3 +1,4 @@
+"use client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
@@ -37,11 +38,13 @@ export const useLogin = () => {
     const toastId = toast.loading("ログイン処理中...");
     try {
       const { email, password } = formdata;
+      console.log(formdata);
       const { error } = await supabase.auth.signInWithPassword({
         email,
         password,
       });
       if (error) {
+        console.error(error);
         throw new Error(`ログインに失敗しました:${error}`);
       }
       await post<PostRequest, PostResponse>("/api/admin/login", {
@@ -50,6 +53,7 @@ export const useLogin = () => {
       reset();
       router.replace("/admin/rooms");
     } catch (e) {
+      console.error(e);
       alert(e);
     } finally {
       toast.dismiss(toastId);

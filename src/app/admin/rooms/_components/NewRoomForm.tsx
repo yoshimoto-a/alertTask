@@ -59,7 +59,7 @@ export const NewRoomForm: React.FC<{
                 {errors.password.message}
               </span>
             )}
-            <Button>登録する</Button>
+            <Button type="submit">登録する</Button>
           </form>
         </div>
       </Modal>

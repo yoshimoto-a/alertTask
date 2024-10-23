@@ -29,7 +29,7 @@ export default function Page() {
         register={register("password")}
       />
       <div className="mt-4 h-9">
-        <Button>ログイン</Button>
+        <Button type="submit">ログイン</Button>
       </div>
     </Form>
   );

@@ -72,6 +72,7 @@ model Schedule {
   id          Int  @id @default(autoincrement())
   daysBefore  Int
   hour        Int
+  datetime    DateTime @default(now()) 
   notificationId Int
   notification   Notification @relation(fields: [notificationId], references: [id])
 }

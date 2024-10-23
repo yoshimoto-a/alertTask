@@ -35,6 +35,7 @@ const columns = [
         <div>
           <span className="">***************</span>
           <button
+            type="button"
             className="bg-slate-800 text-white px-3 pb-2 pt-1 ml-2 rounded-md"
             onClick={async () => {
               await navigator.clipboard.writeText(url);
