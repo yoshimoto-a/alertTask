@@ -27,6 +27,7 @@ model Room {
 model Task {
   id        Int      @id @default(autoincrement())
   date      DateTime
+  task      String
   // RoomTaskとのリレーション
   roomTasks RoomTask[]
 
@@ -56,8 +57,8 @@ model RoomTask {
 }
 
 model Notification {
+  id               Int      @id @default(autoincrement())
   taskId           Int
-  notificationType String
 
   // Taskとのリレーション
   task Task @relation(fields: [taskId], references: [id])
@@ -65,16 +66,13 @@ model Notification {
   // Scheduleとのリレーション
   schedules Schedule[]
 
-  @@id([taskId, notificationType]) // 複合主キー
 }
 
 model Schedule {
-  id              Int  @id @default(autoincrement())
-  notificationId  Int  // Notificationとのリレーション
-  notificationType String  // Notificationの複合キーの一部
-
-  notification    Notification @relation(fields: [notificationId, notificationType], references: [taskId, notificationType])
-
+  id          Int  @id @default(autoincrement())
   daysBefore  Int
   hour        Int
+  datetime    DateTime @default(now()) 
+  notificationId Int
+  notification   Notification @relation(fields: [notificationId], references: [id])
 }

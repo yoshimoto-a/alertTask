@@ -2,7 +2,7 @@
 import { Button } from "@/app/_components/Button";
 import { useNewRoom } from "../_hooks/useNewRoom";
 import { KeyedMutator } from "swr";
-import { IndexResponse } from "@/app/_types/admin/room/IndexResponse";
+import { IndexResponse } from "@/app/_types/admin/rooms/IndexResponse";
 import { Modal } from "@/app/_components/Modal";
 import { faPlusCircle, faXmarkCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -59,7 +59,7 @@ export const NewRoomForm: React.FC<{
                 {errors.password.message}
               </span>
             )}
-            <Button>登録する</Button>
+            <Button type="submit">登録する</Button>
           </form>
         </div>
       </Modal>

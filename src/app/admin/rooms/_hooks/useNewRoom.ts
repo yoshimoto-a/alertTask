@@ -2,10 +2,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { useApi } from "@/app/_hooks/useApi";
-import { PostRequest } from "@/app/_types/admin/room/PostRequest";
-import { PostResponse } from "@/app/_types/admin/room/PostResponse";
+import { PostRequest } from "@/app/_types/admin/rooms/PostRequest";
+import { PostResponse } from "@/app/_types/admin/rooms/PostResponse";
 import { KeyedMutator } from "swr";
-import { IndexResponse } from "@/app/_types/admin/room/IndexResponse";
+import { IndexResponse } from "@/app/_types/admin/rooms/IndexResponse";
 import { useState } from "react";
 // import toast from "react-hot-toast";
 
