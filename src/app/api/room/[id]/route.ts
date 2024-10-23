@@ -108,7 +108,7 @@ export const GET = async (
       },
     });
 
-    return Response.json(
+    return NextResponse.json(
       {
         groupName: roomDataWithTaskIds.groupName,
         tasks: tasks.map(item => ({
@@ -125,7 +125,7 @@ export const GET = async (
     );
   } catch (e) {
     if (e instanceof Error) {
-      return Response.json({ error: e.message }, { status: 400 });
+      return NextResponse.json({ error: e.message }, { status: 400 });
     }
   }
 };
