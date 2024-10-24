@@ -2,7 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 
 export const POST = async (req: NextRequest) => {
   try {
-    console.log(req.body);
+    const body = await req.json();
+    console.log(body);
     // リクエストのパラメータをそのまま返す
     return NextResponse.json(
       {
