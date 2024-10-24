@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 export const POST = async (req: NextRequest) => {
   try {
     const body = await req.json();
-    console.log(body);
+    console.log(body.events[0].source);
     // リクエストのパラメータをそのまま返す
     return NextResponse.json(
       {
