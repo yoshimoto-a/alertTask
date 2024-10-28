@@ -31,7 +31,12 @@ export const POST = async (req: NextRequest) => {
     const buffer = randomBytes(16);
     const roomUrlId = buffer.toString("hex");
 
-    console.log(roomUrlId, pokeName);
+    console.log({
+      adminUserId: process.env.ADMIN_USER as string,
+      lineId,
+      roomUrlId,
+      password: pokeName,
+    });
     const roomData = await prisma.room.create({
       data: {
         adminUserId: process.env.ADMIN_USER as string,
