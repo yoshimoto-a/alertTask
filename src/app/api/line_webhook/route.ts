@@ -22,6 +22,7 @@ export const POST = async (req: NextRequest) => {
         { status: 200 }
       );
 
+    console.log(joinEvent.source);
     const { groupId, roomId, userId } = joinEvent.source;
     const lineId = groupId || roomId || userId;
     if (!lineId) throw new Error("IDの取得が出来ませんでした");
