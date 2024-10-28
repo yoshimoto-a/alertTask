@@ -13,8 +13,7 @@ generator client {
 
 model Room {
   id          String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  apiToken    String   @unique
-  groupName   String
+  lineId      String   @unique
   created     DateTime @default(now())
   adminUserId String   @db.Uuid
   adminUser   AdminUser @relation(fields: [adminUserId], references: [id])

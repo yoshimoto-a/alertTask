@@ -7,31 +7,10 @@ import { randomBytes } from "crypto";
 
 export const POST = async (req: NextRequest) => {
   const prisma = await buildPrisma();
-  const token = req.headers.get("Authorization") ?? "";
-  const { data, error } = await supabase.auth.getUser(token);
-
-  if (error) return Response.json({ status: 401, message: "Unauthorized" });
   const body: PostRequest = await req.json();
   const { lineToken, password } = body;
   try {
-    //すでに登録済のトークンではないか確認
-    const existingRoom = await prisma.room.findUnique({
-      where: {
-        apiToken: lineToken,
-      },
-    });
-
-    if (existingRoom) {
-      throw new Error("このapiTokenは既に使用されています。");
-    }
-
     const { groupName } = await getGroupName(lineToken);
-    const adminUserData = await prisma.adminUser.findUnique({
-      where: {
-        supabaseUserId: data.user.id,
-      },
-    });
-    if (!adminUserData) throw new Error("ユーザー情報なし");
 
     //UrlのId生成する
     const buffer = randomBytes(16);
@@ -39,9 +18,8 @@ export const POST = async (req: NextRequest) => {
 
     const roomData = await prisma.room.create({
       data: {
-        adminUserId: adminUserData.id,
-        apiToken: lineToken,
-        groupName,
+        adminUserId: process.env.ADMIN_USER as string,
+        lineId: groupName,
         roomUrlId,
         password,
       },
