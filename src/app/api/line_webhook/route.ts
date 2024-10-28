@@ -18,7 +18,7 @@ export const POST = async (req: NextRequest) => {
         {
           message: "参加イベントじゃない",
         },
-        { status: 200 }
+        { status: 204 }
       );
 
     const { groupId, roomId, userId } = joinEvent.source;
@@ -31,12 +31,7 @@ export const POST = async (req: NextRequest) => {
     const buffer = randomBytes(16);
     const roomUrlId = buffer.toString("hex");
 
-    console.log({
-      adminUserId: process.env.ADMIN_USER as string,
-      lineId,
-      roomUrlId,
-      password: pokeName,
-    });
+    console.log(process.env.ADMIN_USER as string);
     const roomData = await prisma.room.create({
       data: {
         adminUserId: process.env.ADMIN_USER as string,
