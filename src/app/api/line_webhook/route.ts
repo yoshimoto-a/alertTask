@@ -10,7 +10,6 @@ export const POST = async (req: NextRequest) => {
   try {
     const body: WebhookRequest = await req.json();
     const events = body.events;
-    console.log(events);
 
     const joinEvent = events.find(event => event.type === "join");
 
@@ -22,7 +21,6 @@ export const POST = async (req: NextRequest) => {
         { status: 200 }
       );
 
-    console.log(joinEvent.source);
     const { groupId, roomId, userId } = joinEvent.source;
     const lineId = groupId || roomId || userId;
     if (!lineId) throw new Error("IDの取得が出来ませんでした");
@@ -32,6 +30,8 @@ export const POST = async (req: NextRequest) => {
     //URLの生成
     const buffer = randomBytes(16);
     const roomUrlId = buffer.toString("hex");
+
+    console.log(roomUrlId, pokeName);
     const roomData = await prisma.room.create({
       data: {
         adminUserId: process.env.ADMIN_USER as string,
