@@ -95,32 +95,33 @@ export const GET = async (
       );
     }
 
-    const taskIds = roomDataWithTaskIds.roomTasks.map(item => item.taskId);
-    const tasks = await prisma.notification.findMany({
-      where: {
-        id: {
-          in: taskIds,
-        },
-      },
-      include: {
-        schedules: true,
-        task: true,
-      },
-    });
+    // const taskIds = roomDataWithTaskIds.roomTasks.map(item => item.taskId);
+    // const tasks = await prisma.notification.findMany({
+    //   where: {
+    //     id: {
+    //       in: taskIds,
+    //     },
+    //   },
+    //   include: {
+    //     schedules: true,
+    //     task: true,
+    //   },
+    // });
 
     return NextResponse.json(
-      {
-        groupName: roomDataWithTaskIds.groupName,
-        tasks: tasks.map(item => ({
-          taskId: item.taskId,
-          date: item.task.date,
-          task: item.task.task,
-          schedules: item.schedules.map(schedule => ({
-            daysBefore: schedule.daysBefore,
-            hour: schedule.hour,
-          })),
-        })),
-      },
+      // {
+      //   groupName: roomDataWithTaskIds.groupName,
+      //   tasks: tasks.map(item => ({
+      //     taskId: item.taskId,
+      //     date: item.task.date,
+      //     task: item.task.task,
+      //     schedules: item.schedules.map(schedule => ({
+      //       daysBefore: schedule.daysBefore,
+      //       hour: schedule.hour,
+      //     })),
+      //   })),
+      // },
+      {},
       { status: 200 }
     );
   } catch (e) {
