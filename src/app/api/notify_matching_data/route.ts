@@ -43,17 +43,17 @@ export const GET = async () => {
       );
     }
 
-    const data = scheduleResponse.map(item =>
-      item.notification.task.roomTasks.map(task => ({
-        token: task.room.apiToken,
-        groupName: task.room.groupName,
-        task: item.notification.task.task,
-        date: item.notification.task.date,
-      }))
-    );
+    // const data = scheduleResponse.map(item =>
+    //   item.notification.task.roomTasks.map(task => ({
+    //     token: task.room.apiToken,
+    //     groupName: task.room.groupName,
+    //     task: item.notification.task.task,
+    //     date: item.notification.task.date,
+    //   }))
+    // );
 
     return NextResponse.json(
-      { message: "success!", scheduleResponse, data },
+      { message: "success!", scheduleResponse, data: "" },
       { status: 200 }
     );
   } catch (e) {
