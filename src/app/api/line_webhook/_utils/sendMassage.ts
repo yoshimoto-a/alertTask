@@ -22,6 +22,7 @@ export const sendMassage = async (
       ],
     }),
   };
+  console.log(`options:${options}`);
   try {
     const resp = await fetcher<SendMassageResponse>(endpoint, options);
     return resp.sentMessages;
