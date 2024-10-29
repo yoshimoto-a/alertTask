@@ -5,6 +5,7 @@ export const sendMassage = async (
   roomId: string,
   password: string
 ) => {
+  console.log(replyToken, roomId, password);
   const endpoint = "https://api.line.me/v2/bot/message/reply";
   const options = {
     method: "POST",
