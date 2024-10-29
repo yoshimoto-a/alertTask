@@ -9,6 +9,7 @@ export const sendMassage = async (
   const options = {
     method: "POST",
     headers: {
+      "Content-Type": "application/json",
       Authorization: `Bearer ${process.env.CHANNEL_ACCESS_TOKEN}`,
     },
     body: JSON.stringify({
@@ -21,8 +22,9 @@ export const sendMassage = async (
       ],
     }),
   };
-
-  console.log(`options:${JSON.stringify(options, null, 2)}`);
+  const resp = await fetch(endpoint, options);
+  console.log(resp);
+  // console.log(`options:${JSON.stringify(options, null, 2)}`);
   try {
     const resp = await fetcher<SendMassageResponse>(endpoint, options);
     return resp.sentMessages;
