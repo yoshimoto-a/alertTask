@@ -1,7 +1,7 @@
-type FetcherOptions<B> = {
-  method?: "GET" | "POST" | "PUT" | "DELETE";
+type FetcherOptions<T> = {
+  method?: string;
   headers?: Record<string, string>;
-  body?: B;
+  body?: T;
 };
 
 export const fetcher = async <ResponseType, RequestBodyType = undefined>(
