@@ -24,11 +24,25 @@ export const POST = async (req: NextRequest) => {
     const { groupId, roomId, userId } = joinEvent.source;
     const lineId = groupId || roomId || userId;
     if (!lineId) throw new Error("IDの取得が出来ませんでした");
-    //合言葉の生成をする
-    const pokeName = await pokeApi();
-    //prismaの登録確認
 
-    //URLの生成t
+    //既存のIDじゃないか確認
+    const room = await prisma.room.findUnique({
+      where: {
+        roomUrlId: lineId,
+      },
+    });
+
+    if (room)
+      return NextResponse.json(
+        {
+          message: "登録済のroomid",
+        },
+        { status: 200 }
+      );
+
+    //合言葉の生成
+    const pokeName = await pokeApi();
+    //URLの生成
     const buffer = randomBytes(16);
     const roomUrlId = buffer.toString("hex");
 
@@ -40,9 +54,9 @@ export const POST = async (req: NextRequest) => {
         password: pokeName,
       },
     });
-    console.log(`joinEvent:${JSON.stringify(joinEvent, null, 2)}`);
-    const resp = await sendMassage(joinEvent.replyToken, roomUrlId, pokeName);
-    console.log(resp);
+
+    await sendMassage(joinEvent.replyToken, roomUrlId, pokeName);
+
     return NextResponse.json(
       {
         message: "success",
