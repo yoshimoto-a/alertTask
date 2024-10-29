@@ -18,7 +18,7 @@ export const POST = async (req: NextRequest) => {
         {
           message: "参加イベントじゃない",
         },
-        { status: 204 }
+        { status: 200 }
       );
 
     const { groupId, roomId, userId } = joinEvent.source;
@@ -39,7 +39,8 @@ export const POST = async (req: NextRequest) => {
         password: pokeName,
       },
     });
-    sendMassage(joinEvent.replyToken, roomUrlId, pokeName);
+    const resp = await sendMassage(joinEvent.replyToken, roomUrlId, pokeName);
+    console.log(resp);
     return NextResponse.json(
       {
         message: "success",

@@ -5,7 +5,6 @@ export const sendMassage = async (
   roomId: string,
   password: string
 ) => {
-  console.log(replyToken, roomId, password);
   const endpoint = "https://api.line.me/v2/bot/message/reply";
   const options = {
     method: "POST",
@@ -25,7 +24,6 @@ export const sendMassage = async (
   };
   try {
     const resp = await fetcher<SendMassageResponse>(endpoint, options);
-    console.log(resp);
     return resp.sentMessages;
   } catch (error) {
     console.error(`Error fetching data for ID ${roomId}:`, error);
