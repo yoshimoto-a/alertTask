@@ -26,6 +26,7 @@ export const POST = async (req: NextRequest) => {
     if (!lineId) throw new Error("IDの取得が出来ませんでした");
     //合言葉の生成をする
     const pokeName = await pokeApi();
+    //prismaの登録確認
 
     //URLの生成
     const buffer = randomBytes(16);
