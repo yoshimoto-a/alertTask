@@ -17,7 +17,7 @@ export const sendMassage = async (
       messages: [
         {
           type: "text",
-          text: `予定を登録するページのURL：${process.env.NEXT_PUBLIC_APP_URL}/${roomId}\n合言葉：${password}`,
+          text: `予定を登録するページのURL：${process.env.NEXT_PUBLIC_APP_URL}/room/${roomId}\n合言葉：${password}`,
         },
       ],
     }),
