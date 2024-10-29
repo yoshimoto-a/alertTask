@@ -1,12 +1,12 @@
-type FetcherOptions<T> = {
+type FetcherOptions = {
   method?: string;
   headers?: Record<string, string>;
-  body?: T;
+  body?: string;
 };
 
-export const fetcher = async <ResponseType, RequestBodyType = undefined>(
+export const fetcher = async <ResponseType>(
   url: string,
-  options: FetcherOptions<RequestBodyType> = {}
+  options: FetcherOptions = {}
 ): Promise<ResponseType> => {
   const { method = "GET", headers = {}, body } = options;
 
