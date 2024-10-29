@@ -28,7 +28,7 @@ export const POST = async (req: NextRequest) => {
     const pokeName = await pokeApi();
     //prismaの登録確認
 
-    //URLの生成
+    //URLの生成t
     const buffer = randomBytes(16);
     const roomUrlId = buffer.toString("hex");
 
@@ -40,6 +40,7 @@ export const POST = async (req: NextRequest) => {
         password: pokeName,
       },
     });
+    console.log(`joinEvent:${JSON.stringify(joinEvent, null, 2)}`);
     const resp = await sendMassage(joinEvent.replyToken, roomUrlId, pokeName);
     console.log(resp);
     return NextResponse.json(
