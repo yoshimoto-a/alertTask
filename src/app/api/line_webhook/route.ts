@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { WebhookRequest } from "./_types/WebhookRequest";
 import { buildPrisma } from "@/app/_utils/prisma";
-
+import { sendMassage } from "./_utils/sendMassage";
 import { pokeApi } from "./_utils/pokeApi";
 import { randomBytes } from "crypto";
 export const POST = async (req: NextRequest) => {
@@ -31,8 +31,7 @@ export const POST = async (req: NextRequest) => {
     const buffer = randomBytes(16);
     const roomUrlId = buffer.toString("hex");
 
-    console.log(process.env.ADMIN_USER as string);
-    const roomData = await prisma.room.create({
+    await prisma.room.create({
       data: {
         adminUserId: process.env.ADMIN_USER as string,
         lineId,
@@ -40,9 +39,7 @@ export const POST = async (req: NextRequest) => {
         password: pokeName,
       },
     });
-
-    console.log(roomData);
-
+    sendMassage(joinEvent.replyToken, roomUrlId, pokeName);
     return NextResponse.json(
       {
         message: "success",
