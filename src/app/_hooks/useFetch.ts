@@ -13,7 +13,7 @@ export const useFetch = <T>(path: string) => {
         Authorization: token,
       },
     };
-    const resp = await fetch(`/api/${path}`, prams);
+    const resp = await fetch(`/${path}`, prams);
     if (!resp.ok) {
       const errorData = await resp.json();
       throw new Error(
@@ -23,6 +23,6 @@ export const useFetch = <T>(path: string) => {
     const data: T = await resp.json();
     return data;
   };
-  const results = useSWR(shouldFetchData ? `/api/${path}` : null, fetcher);
+  const results = useSWR(shouldFetchData ? `/${path}` : null, fetcher);
   return results;
 };

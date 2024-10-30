@@ -5,7 +5,7 @@ import { useParams } from "next/navigation";
 export const useRoomIndex = () => {
   const params = useParams();
   const { data, isLoading, error, mutate } = useFetch<IndexResponse>(
-    `room/${params?.id}`
+    `api/room/${params?.id}`
   );
   return {
     isLoading,
