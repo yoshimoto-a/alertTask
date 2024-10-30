@@ -2,7 +2,7 @@ import useSWR from "swr";
 import { useSupabaseSession } from "./useSupabaseSesion";
 
 export const useFetch = <T>(path: string) => {
-  const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL;
   const { token, isLoading } = useSupabaseSession();
   const shouldFetchData = !isLoading && token;
   const fetcher = async () => {
@@ -14,7 +14,6 @@ export const useFetch = <T>(path: string) => {
         Authorization: token,
       },
     };
-
     const resp = await fetch(`${baseUrl}${path}`, prams);
     if (!resp.ok) {
       const errorData = await resp.json();

@@ -1,3 +1,4 @@
+"use client";
 import { ReactNode, ComponentPropsWithRef, forwardRef } from "react";
 
 interface Props extends Omit<ComponentPropsWithRef<"button">, "className"> {

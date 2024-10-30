@@ -1,7 +1,6 @@
 export interface Room {
   id: string;
-  apiToken: string;
-  groupName: string;
+  lineId: string;
   roomUrlId: string;
   password: string;
 }
