@@ -42,7 +42,7 @@ const columns = [
 ];
 interface Props {
   taskData: Task[];
-  mutate: KeyedMutator<IndexResponse | undefined>;
+  mutate: KeyedMutator<IndexResponse>;
 }
 
 export const TaskIndex: React.FC<Props> = ({ taskData, mutate }) => {

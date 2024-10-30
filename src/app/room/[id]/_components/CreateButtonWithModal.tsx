@@ -10,7 +10,7 @@ import { IndexResponse } from "@/app/_types/room/[id]/IndexResponse";
 import { useControlTask } from "../_hooks/useControlTask";
 
 interface Props {
-  mutate: KeyedMutator<IndexResponse | undefined>;
+  mutate: KeyedMutator<IndexResponse>;
 }
 export const CreateButtonWithModal: React.FC<Props> = ({ mutate }) => {
   const {
