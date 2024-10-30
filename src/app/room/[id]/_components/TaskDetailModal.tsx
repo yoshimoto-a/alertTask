@@ -12,7 +12,7 @@ import { useTask } from "../_hooks/useTask";
 import dayjs from "dayjs";
 
 interface Props {
-  mutate: KeyedMutator<IndexResponse | undefined>;
+  mutate: KeyedMutator<IndexResponse>;
   isOpen: boolean;
   closeModal: () => void;
   taskId: number;
