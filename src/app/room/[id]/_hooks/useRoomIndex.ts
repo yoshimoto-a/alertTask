@@ -1,4 +1,4 @@
-import { useFetch } from "@/app/_hooks/useFetch";
+import { useFetch } from "./useFetch";
 import { IndexResponse } from "@/app/_types/room/[id]/IndexResponse";
 import { useParams } from "next/navigation";
 

@@ -1,5 +1,5 @@
 import useSWR from "swr";
-import { useSupabaseSession } from "./useSupabaseSesion";
+import { useSupabaseSession } from "../../_hooks/useSupabaseSesion";
 
 export const useFetch = <T>(path: string) => {
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL;
