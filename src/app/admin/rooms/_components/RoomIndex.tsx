@@ -19,8 +19,8 @@ const columns = [
     header: "ID",
     cell: info => info.getValue(),
   }),
-  columnHelper.accessor("groupName", {
-    header: "LINEグループ名",
+  columnHelper.accessor("lineId", {
+    header: "LINEId",
     cell: info => info.getValue(),
   }),
   columnHelper.accessor("password", {
@@ -47,10 +47,6 @@ const columns = [
         </div>
       );
     },
-  }),
-  columnHelper.accessor("apiToken", {
-    header: "APItoken",
-    cell: info => info.getValue(),
   }),
 ];
 interface Props {

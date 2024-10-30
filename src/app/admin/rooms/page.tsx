@@ -6,6 +6,7 @@ import { useRooms } from "./_hooks/useRooms";
 export default function Page() {
   const { isLoading, email } = useAdminUser();
   const { data, isLoading: roomsIsLoading, error, mutate } = useRooms();
+
   return (
     <div className="h-screen relative py-5 px-3">
       <h1 className="text-center text-4xl">ルーム一覧</h1>

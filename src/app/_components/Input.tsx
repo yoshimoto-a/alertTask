@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import { UseFormRegisterReturn, FieldError } from "react-hook-form";
 
