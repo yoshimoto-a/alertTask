@@ -19,7 +19,7 @@ interface Task {
   task: string;
 }
 export const useControlTask = (
-  mutate: KeyedMutator<IndexResponse | undefined>,
+  mutate: KeyedMutator<IndexResponse>,
   taskId: number | null,
   data: DetailResponse | undefined | null
 ) => {
