@@ -2,7 +2,7 @@
 import { ReactNode } from "react";
 interface Props {
   children: ReactNode;
-  onSubmit: () => void;
+  onSubmit: (() => void) | ((e: React.FormEvent) => Promise<void>);
   title: string;
 }
 
