@@ -2,7 +2,7 @@
   "crons": [
     {
       "path": "/api/line_notifications",
-      "schedule": "*/60 * * * *"
+      "schedule": "0 * * * *"
     }
   ]
 }
