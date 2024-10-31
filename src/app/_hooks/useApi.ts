@@ -43,7 +43,6 @@ export const useApi = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: (await getSession()).access_token,
         },
         body: JSON.stringify(payload),
       });
@@ -72,7 +71,6 @@ export const useApi = () => {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
-          Authorization: (await getSession()).access_token,
         },
         body: JSON.stringify(payload),
       });
