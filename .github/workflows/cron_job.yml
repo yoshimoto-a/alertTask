@@ -1,0 +1,15 @@
+name: Hourly Request to Vercel
+
+on:
+  schedule:
+    - cron: "0 * * * *"
+
+jobs:
+  call-vercel:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Call Vercel API
+        env:
+          APP_URL: ${{ secrets.NEXT_PUBLIC_APP_URL }}
+        run: |
+          curl -X POST "$APP_URL/api/line_notifications"
