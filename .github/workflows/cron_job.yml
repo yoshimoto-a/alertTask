@@ -12,4 +12,4 @@ jobs:
         env:
           APP_URL: ${{ secrets.APP_URL }}
         run: |
-          curl -X GET "$APP_URL/api/line_notifications"
+          curl -v -X GET "$APP_URL/api/line_notifications"
