@@ -59,7 +59,7 @@ export const GET = async () => {
         return acc;
       }, {} as Record<string, { lineId: string; data: Record<string, { task: string; date: string }> }>);
 
-    const result = messagePush(
+    const result = await messagePush(
       Object.values(groupedRoomsTasks).map(room => ({
         lineId: room.lineId,
         data: Object.values(room.data),
