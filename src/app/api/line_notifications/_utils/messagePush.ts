@@ -3,10 +3,10 @@ import { RoomsTasks } from "../_types/RoomsTasks";
 import { PushResponse, sentMessage } from "../_types/PushResponse";
 import { PushRequest } from "../_types/PushRequest";
 export const messagePush = async (roomsTasks: RoomsTasks[]) => {
-  const resposeMessages: sentMessage[][] = [[]];
+  const resposeMessages: sentMessage[] = [];
   const endpoint = "https://api.line.me/v2/bot/message/push";
   try {
-    roomsTasks.forEach(async roomTask => {
+    for (const roomTask of roomsTasks) {
       const text = roomTask.data
         .map(task => `日付:${task.date}\n予定:${task.task}\n`)
         .join("\n");
@@ -31,11 +31,14 @@ export const messagePush = async (roomsTasks: RoomsTasks[]) => {
           endpoint,
           options
         );
-        resposeMessages.push(resp.sentMessages);
+        if (resp.sentMessages.length > 0) {
+          const { id, quoteToken } = resp.sentMessages[0];
+          resposeMessages.push({ id, quoteToken });
+        }
       } catch (e) {
         console.error(e);
       }
-    });
+    }
   } catch (e) {
     console.error(e);
   }
