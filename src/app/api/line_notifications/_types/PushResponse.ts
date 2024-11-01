@@ -1,6 +1,6 @@
 export type sentMessage = {
   id: string;
-  quoteToken: string;
+  quoteToken?: string;
 };
 
 export type PushResponse = {
