@@ -36,7 +36,6 @@ export const TaskDetailModal: React.FC<Props> = ({
   } = useControlTask(mutate, taskId, data);
   useEffect(() => {
     if (data) {
-      console.log(dayjs.tz(data.date).format("YYYY-MM-DD"));
       setSchedules(data.schedules);
     }
   }, [data, setSchedules]);
@@ -70,7 +69,9 @@ export const TaskDetailModal: React.FC<Props> = ({
                   type="date"
                   disabled={isSubmitting}
                   placeholder="日付"
-                  defaultValue={dayjs.tz(data.date).format("YYYY-MM-DD")}
+                  defaultValue={dayjs
+                    .tz(data.date, "Asia/Tokyo")
+                    .format("YYYY-MM-DD")}
                   className="bg-custom-gray py-2 px-3 mb-1 text-gray-700 leading-tight w-full border-[1px] rounded-lg"
                   {...register("date")}
                 />
