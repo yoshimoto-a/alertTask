@@ -3,6 +3,7 @@ name: Hourly Request to Vercel
 on:
   schedule:
     - cron: "0 * * * *"
+  workflow_dispatch:
 
 jobs:
   call-vercel:
@@ -10,6 +11,8 @@ jobs:
     steps:
       - name: Call Vercel API
         env:
-          APP_URL: ${ secrets.APP_URL }
+          APP_URL: ${{ secrets.APP_URL }}
+
         run: |
-          curl -v -X GET "$APP_URL/api/line_notifications?nocache=$(date +%s)"
+          echo "Using APP_URL: $APP_URL"
+          curl -v "$APP_URL/api/line_notifications?nocache=$(date +%s)"
