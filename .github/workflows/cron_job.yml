@@ -14,5 +14,4 @@ jobs:
           APP_URL: ${{ secrets.APP_URL }}
 
         run: |
-          curl -v "$APP_URL/api/line_notifications?timestamp=$(date +%s)"
-
+          curl -v "$APP_URL/api/line_notifications"

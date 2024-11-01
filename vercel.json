@@ -1,0 +1,11 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/line_notifications",
+      "destination": "/api/line_notifications",
+      "headers": {
+        "cache-control": "no-store"
+      }
+    }
+  ]
+}
