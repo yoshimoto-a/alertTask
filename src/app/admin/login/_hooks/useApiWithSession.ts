@@ -1,27 +1,36 @@
 import { useCallback } from "react";
-
-export const useApi = () => {
-  const get = useCallback(async <ResponseType>(endpoint: string) => {
-    try {
-      const response = await fetch(endpoint, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      if (response.status !== 200) {
-        throw new Error("データの取得に失敗しました。");
-      }
-
-      const data: ResponseType = await response.json();
-
-      return data;
-    } catch (error) {
-      if (error instanceof Error) {
-        throw error;
-      }
-    }
+import { supabase } from "@/app/_utils/supabase";
+export const useApiWithSession = () => {
+  const getSession = useCallback(async () => {
+    const session = (await supabase.auth.getSession()).data.session;
+    if (!session) throw new Error("セッションが見つかりません。");
+    return session;
   }, []);
+  const get = useCallback(
+    async <ResponseType>(endpoint: string) => {
+      try {
+        const response = await fetch(endpoint, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: (await getSession()).access_token,
+          },
+        });
+
+        if (response.status !== 200) {
+          throw new Error("データの取得に失敗しました。");
+        }
+
+        const data: ResponseType = await response.json();
+
+        return data;
+      } catch (error) {
+        if (error instanceof Error) {
+          throw error;
+        }
+      }
+    },
+    [getSession]
+  );
 
   const post = async <RequestType, ResponseType>(
     endpoint: string,
@@ -32,6 +41,7 @@ export const useApi = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: (await getSession()).access_token,
         },
         body: JSON.stringify(payload),
       });
@@ -60,6 +70,7 @@ export const useApi = () => {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
+          Authorization: (await getSession()).access_token,
         },
         body: JSON.stringify(payload),
       });
@@ -80,6 +91,7 @@ export const useApi = () => {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
+          Authorization: (await getSession()).access_token,
         },
       });
 
