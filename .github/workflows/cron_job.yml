@@ -10,6 +10,6 @@ jobs:
     steps:
       - name: Call Vercel API
         env:
-          APP_URL: ${{ secrets.APP_URL }}
+          APP_URL: ${ secrets.APP_URL }
         run: |
-          curl -v -X GET "$APP_URL/api/line_notifications"
+          curl -v -X GET "$APP_URL/api/line_notifications?nocache=$(date +%s)"
