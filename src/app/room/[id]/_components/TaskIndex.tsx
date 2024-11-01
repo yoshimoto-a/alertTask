@@ -16,7 +16,7 @@ const columnHelper = createColumnHelper<Task>();
 const columns = [
   columnHelper.accessor("date", {
     header: "日付",
-    cell: info => dayjs.tz(info.getValue()).format("YYYY/M/D"),
+    cell: info => dayjs.tz(info.getValue(), "Asia/Tokyo").format("YYYY/M/D"),
   }),
   columnHelper.accessor("task", {
     header: "予定",

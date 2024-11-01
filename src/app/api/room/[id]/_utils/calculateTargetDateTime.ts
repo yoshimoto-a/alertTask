@@ -1,12 +1,13 @@
+import { dayjs } from "@/app/_utils/dayjs";
 export const calculateTargetDateTime = (
   date: Date,
   daysBefore: number,
   hour: number
 ) => {
-  const targetDate = new Date(date);
-  targetDate.setDate(targetDate.getDate() - daysBefore);
+  const targetDate = dayjs
+    .tz(date, "Asia/Tokyo")
+    .subtract(daysBefore, "day")
+    .hour(hour);
 
-  targetDate.setHours(hour);
-
-  return targetDate;
+  return targetDate.toDate();
 };
