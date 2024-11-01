@@ -4,6 +4,7 @@ import { dayjs } from "@/app/_utils/dayjs";
 import { messagePush } from "./_utils/messagePush";
 
 export const GET = async () => {
+  console.log("呼ばれた");
   const prisma = await buildPrisma();
   const now = dayjs().tz("Asia/Tokyo");
 
@@ -35,6 +36,7 @@ export const GET = async () => {
         },
       },
     });
+    console.log(schedules);
 
     if (!schedules || schedules.length === 0) {
       return NextResponse.json({ message: "data is null" }, { status: 200 });
