@@ -26,7 +26,7 @@ export async function POST(
 
       //タスクを登録
       const body: PostRequest = await req.json();
-      const { date, task } = body;
+      const { date, task, schedules } = body;
       const TaskData = await prisma.task.create({
         data: {
           date: date,
@@ -51,7 +51,7 @@ export async function POST(
 
       //通知のスケジュール登録
       await prisma.schedule.createMany({
-        data: body.schedules.map(schedule => ({
+        data: schedules.map(schedule => ({
           daysBefore: schedule.daysBefore,
           hour: schedule.hour,
           datetime: calculateTargetDateTime(

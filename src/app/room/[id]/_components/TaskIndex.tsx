@@ -8,7 +8,7 @@ import {
 import { Task } from "@/app/_types/room/[id]/IndexResponse";
 import { IndexResponse } from "@/app/_types/room/[id]/IndexResponse";
 import { KeyedMutator } from "swr";
-import dayjs from "dayjs";
+import { dayjs } from "@/app/_utils/dayjs";
 import { TaskDetailModal } from "./TaskDetailModal";
 import { useState } from "react";
 
@@ -16,7 +16,7 @@ const columnHelper = createColumnHelper<Task>();
 const columns = [
   columnHelper.accessor("date", {
     header: "日付",
-    cell: info => dayjs(info.getValue()).format("YYYY/M/D"),
+    cell: info => dayjs.tz(info.getValue()).format("YYYY/M/D"),
   }),
   columnHelper.accessor("task", {
     header: "予定",
