@@ -5,7 +5,7 @@ import { messagePush } from "./_utils/messagePush";
 
 export const GET = async () => {
   const prisma = await buildPrisma();
-  const now = dayjs.tz("Asia/Tokyo");
+  const now = dayjs().tz("Asia/Tokyo");
 
   const startOfHour = now.startOf("hour").toDate();
   const endOfHour = now.endOf("hour").toDate();
