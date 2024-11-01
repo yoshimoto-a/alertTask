@@ -1,11 +1,13 @@
 {
-  "rewrites": [
+  "headers": [
     {
       "source": "/api/line_notifications",
-      "destination": "/api/line_notifications",
-      "headers": {
-        "cache-control": "no-store"
-      }
+      "headers": [
+        {
+          "key": "cache-control",
+          "value": "no-store"
+        }
+      ]
     }
   ]
 }
