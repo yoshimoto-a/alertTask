@@ -3,7 +3,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { supabase } from "@/app/_utils/supabase";
-import { useApi } from "@/app/_hooks/useApi";
+import { useApiWithSession } from "./useApiWithSession";
 import toast from "react-hot-toast";
 import { PostRequest } from "@/app/_types/admin/login/PostRequest";
 import { PostResponse } from "@/app/_types/admin/login/PostResponse";
@@ -15,7 +15,7 @@ interface LoginForm {
 }
 
 export const useLogin = () => {
-  const { post } = useApi();
+  const { post } = useApiWithSession();
   const router = useRouter();
   const schema = z.object({
     email: z

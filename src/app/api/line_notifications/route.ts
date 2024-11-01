@@ -1,13 +1,14 @@
 import { NextResponse } from "next/server";
 import { buildPrisma } from "@/app/_utils/prisma";
-import dayjs from "dayjs";
+import { dayjs } from "@/app/_utils/dayjs";
 import { messagePush } from "./_utils/messagePush";
 
 export const GET = async () => {
   const prisma = await buildPrisma();
-  const now = new Date();
-  const startOfHour = new Date(now.setMinutes(0, 0, 0));
-  const endOfHour = new Date(now.setMinutes(59, 59, 999));
+  const now = dayjs().tz("Asia/Tokyo");
+
+  const startOfHour = now.startOf("hour").toDate();
+  const endOfHour = now.endOf("hour").toDate();
 
   try {
     const schedules = await prisma.schedule.findMany({

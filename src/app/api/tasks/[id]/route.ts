@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { buildPrisma } from "@/app/_utils/prisma";
 import { PutRequest } from "@/app/_types/task/PutRequest";
 import { ScheduleType } from "@/app/room/[id]/_types/schedule";
+import { calculateTargetDateTime } from "../../room/[id]/_utils/calculateTargetDateTime";
 
 export const DELETE = async (
   req: NextRequest,
@@ -158,7 +159,7 @@ export async function PUT(
 
       //タスクを更新
       const body: PutRequest = await req.json();
-      const { date, task } = body;
+      const { date, task, schedules } = body;
       const TaskData = await prisma.task.update({
         where: {
           id: Number(taskId),
@@ -179,10 +180,15 @@ export async function PUT(
       });
 
       await prisma.schedule.createMany({
-        data: body.schedules.map(schedule => ({
+        data: schedules.map(schedule => ({
           daysBefore: schedule.daysBefore,
           hour: schedule.hour,
           notificationId: notificationId,
+          datetime: calculateTargetDateTime(
+            date,
+            schedule.daysBefore,
+            schedule.hour
+          ),
         })),
       });
       return TaskData.id;
