@@ -3,8 +3,7 @@ import { buildPrisma } from "@/app/_utils/prisma";
 import { dayjs } from "@/app/_utils/dayjs";
 import { messagePush } from "./_utils/messagePush";
 
-export const GET = async () => {
-  console.log("呼ばれた");
+export const POST = async () => {
   const prisma = await buildPrisma();
   const now = dayjs().tz("Asia/Tokyo");
 
