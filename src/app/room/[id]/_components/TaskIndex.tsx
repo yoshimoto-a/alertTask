@@ -55,7 +55,7 @@ export const TaskIndex: React.FC<Props> = ({ taskData, mutate }) => {
   const [selectedTaskId, setSelectedTaskId] = useState<number | null>(null);
 
   return (
-    <div className="mx-auto pt-10 px-1 w-full">
+    <div className="mx-auto pt-3 px-1 w-full">
       <table className="table-fixed mb-10 w-full">
         <thead className="bg-gray-200">
           {table.getHeaderGroups().map(headerGroup => (
