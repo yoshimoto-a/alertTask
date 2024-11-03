@@ -3,6 +3,7 @@ import { IndexResponse } from "@/app/_types/room/[id]/IndexResponse";
 import { useParams } from "next/navigation";
 import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
+import { dayjs } from "@/app/_utils/dayjs";
 export const useRoomIndex = () => {
   const params = useParams();
   const searchParams = useSearchParams();
@@ -11,8 +12,8 @@ export const useRoomIndex = () => {
   const endDate = searchParams?.get("to") || "";
   const [searchKeyword, setSearchKeyword] = useState(keyword);
   const [searchDate, setSearchDate] = useState({
-    startDate: startDate ? new Date(startDate) : "",
-    endDate: endDate ? new Date(endDate) : "",
+    startDate: startDate ? dayjs.tz(startDate).format("YYYY-MM-DD") : "",
+    endDate: endDate ? dayjs.tz(endDate).format("YYYY-MM-DD") : "",
   });
   const page = parseInt(searchParams.get("page") || "1", 10);
   const [currentPage, setCurrentPage] = useState(1);
