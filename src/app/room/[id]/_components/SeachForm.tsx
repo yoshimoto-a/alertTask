@@ -40,8 +40,8 @@ export const SeachForm: React.FC<Props> = ({
     });
   };
   return (
-    <>
-      <form className="flex mr-1" onSubmit={handleSubmit}>
+    <div className="flex flex-col gap-2">
+      <form className="flex" onSubmit={handleSubmit}>
         <div className="border-[1px] px-2 rounded-lg py-1 flex relative">
           <input
             id="searchWord"
@@ -64,7 +64,7 @@ export const SeachForm: React.FC<Props> = ({
           )}
         </div>
       </form>
-      <div className="max-w-[40%] border-[1px] p-1 rounded-md mx-2 flex items-center relative">
+      <div className="border-[1px] p-1 rounded-md flex items-center relative">
         <DatePicker
           locale="ja"
           onChange={e => handleDateChange(e)}
@@ -84,6 +84,6 @@ export const SeachForm: React.FC<Props> = ({
           <FontAwesomeIcon icon={faCalendar} className="absolute right-1" />
         )}
       </div>
-    </>
+    </div>
   );
 };
