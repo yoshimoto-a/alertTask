@@ -26,10 +26,10 @@ export const CreateButtonWithModal: React.FC<Props> = ({ mutate }) => {
   } = useControlTask(mutate, null, null);
 
   return (
-    <div className="flex justify-end pt-2">
+    <div className="flex justify-end pt-2 px-5">
       <Toaster position="top-right" />
       <button onClick={() => setIsOpen(true)}>
-        <FontAwesomeIcon icon={faCirclePlus} className="" />
+        <FontAwesomeIcon icon={faCirclePlus} className="text-2xl" />
       </button>
       <Modal isOpen={isOpen} onClose={onClose} className="">
         <form className="" onSubmit={handleSubmit}>

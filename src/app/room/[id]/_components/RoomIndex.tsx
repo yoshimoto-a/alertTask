@@ -21,7 +21,7 @@ export const RoomIndex: React.FC = () => {
       <div className="mx-2 w-full">
         <h2 className="text-xl py-5">予定一覧</h2>
 
-        <div className="flex justify-end items-center w-full">
+        <div className="flex justify-end items-center w-full px-5">
           <SeachForm
             searchDate={searchDate}
             setSearchDate={setSearchDate}
