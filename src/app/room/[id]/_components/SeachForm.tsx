@@ -5,11 +5,12 @@ import {
   faMagnifyingGlass,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import DatePicker from "react-datepicker";
 import { useState } from "react";
-import DatePicker, { registerLocale } from "react-datepicker";
-import { ja } from "date-fns/locale/ja";
+// import DatePicker, { registerLocale } from "react-datepicker";
+// import { ja } from "date-fns/locale/ja";
 import "react-datepicker/dist/react-datepicker.css";
-registerLocale("ja", ja);
+// registerLocale("ja", ja);
 type Props = {
   searchDate: {
     startDate: string | Date;
@@ -66,7 +67,7 @@ export const SeachForm: React.FC<Props> = ({
       </form>
       <div className="max-w-[40%] border-[1px] p-1 rounded-md mx-2 flex items-center relative">
         <DatePicker
-          locale="ja"
+          // locale="ja"
           onChange={e => handleDateChange(e)}
           dateFormatCalendar="yyyy年 MM月"
           dateFormat="yyyy/MM/dd"
