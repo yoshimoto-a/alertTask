@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { buildPrisma } from "@/app/_utils/prisma";
 import { PostRequest } from "@/app/_types/room/[id]/PostRequest";
 import { calculateTargetDateTime } from "./_utils/calculateTargetDateTime";
+import { dayjs } from "@/app/_utils/dayjs";
 export async function POST(
   req: NextRequest,
   { params }: { params: { id: string } }
@@ -74,12 +75,18 @@ export async function POST(
 
 export const GET = async (
   req: NextRequest,
-  { params }: { params: { id: string } }
+  {
+    params,
+  }: {
+    params: {
+      id: string;
+    };
+  }
 ) => {
   const prisma = await buildPrisma();
   try {
-    //urlからroomid取得
     const roomUrlId = params.id;
+
     const roomDataWithTaskIds = await prisma.room.findUnique({
       where: {
         roomUrlId,
@@ -95,16 +102,39 @@ export const GET = async (
       );
     }
 
+    const url = new URL(req.url);
+    const from = url.searchParams.get("from");
+    const to = url.searchParams.get("to");
+    const searchword = url.searchParams.get("keyword");
+    const page = url.searchParams.get("page");
+    //初期設定する
+    const fromDate = from
+      ? dayjs(from).startOf("day").toDate()
+      : dayjs().startOf("day").toDate();
+    const toDate = to ? dayjs(to).endOf("day").toDate() : null;
+
+    const pageSize = 30;
+    const pageNumber = page ? parseInt(page, 10) : 1;
     const taskIds = roomDataWithTaskIds.roomTasks.map(item => item.taskId);
     const tasks = await prisma.notification.findMany({
       where: {
         id: {
           in: taskIds,
         },
+        ...(searchword
+          ? {
+              task: {
+                task: {
+                  contains: searchword,
+                },
+              },
+            }
+          : {}),
         schedules: {
           some: {
             datetime: {
-              gte: new Date(new Date().setHours(0, 0, 0, 0)),
+              gte: fromDate,
+              ...(toDate && { lte: toDate }),
             },
           },
         },
@@ -113,6 +143,13 @@ export const GET = async (
         schedules: true,
         task: true,
       },
+      orderBy: {
+        task: {
+          date: "asc", // 日付を昇順に並べ替え
+        },
+      },
+      skip: (pageNumber - 1) * pageSize,
+      take: pageSize,
     });
 
     return NextResponse.json(

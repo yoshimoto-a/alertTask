@@ -26,7 +26,7 @@ export const CreateButtonWithModal: React.FC<Props> = ({ mutate }) => {
   } = useControlTask(mutate, null, null);
 
   return (
-    <div>
+    <div className="flex justify-end pt-2">
       <Toaster position="top-right" />
       <button onClick={() => setIsOpen(true)}>
         <FontAwesomeIcon icon={faCirclePlus} className="" />
