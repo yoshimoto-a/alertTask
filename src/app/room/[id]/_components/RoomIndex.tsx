@@ -17,7 +17,7 @@ export const RoomIndex: React.FC = () => {
   if (error)
     return <div className="text-center pt-20">データの取得に失敗しました</div>;
   return (
-    <div className="max-w-md mx-auto">
+    <div className="max-w-md mx-auto relative">
       <div className="mx-2 w-full">
         <h2 className="text-xl py-5">予定一覧</h2>
 
@@ -28,7 +28,7 @@ export const RoomIndex: React.FC = () => {
             setSearchKeyword={setSearchKeyword}
           />
         </div>
-        <CreateButtonWithModal mutate={mutate} />
+
         {isLoading ? (
           <div className="text-center pt-20">読込み中...</div>
         ) : tasks ? (
@@ -36,6 +36,9 @@ export const RoomIndex: React.FC = () => {
         ) : (
           <div className="text-center pt-20">データがありません</div>
         )}
+      </div>
+      <div className="fixed bottom-2 right-2">
+        <CreateButtonWithModal mutate={mutate} />
       </div>
     </div>
   );

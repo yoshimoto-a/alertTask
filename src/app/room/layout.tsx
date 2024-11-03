@@ -6,5 +6,5 @@ export const metadata: Metadata = {
   },
 };
 export default function RoomLayout({ children }: { children: ReactNode }) {
-  return <div>{children}</div>;
+  return <div className="min-h-dvh">{children}</div>;
 }
