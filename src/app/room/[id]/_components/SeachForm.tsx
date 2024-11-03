@@ -5,16 +5,17 @@ import {
   faMagnifyingGlass,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import DatePicker from "react-datepicker";
 import { useState } from "react";
-// import DatePicker, { registerLocale } from "react-datepicker";
-// import { ja } from "date-fns/locale/ja";
+import DatePicker, { registerLocale } from "react-datepicker";
+import { ja } from "date-fns/locale/ja";
 import "react-datepicker/dist/react-datepicker.css";
-// registerLocale("ja", ja);
+import { dayjs } from "@/app/_utils/dayjs";
+
+registerLocale("ja", ja);
 type Props = {
   searchDate: {
-    startDate: string | Date;
-    endDate: string | Date;
+    startDate: string;
+    endDate: string;
   };
   setSearchKeyword: (searchKeyword: string) => void;
   setSearchDate: (dates: { startDate: string; endDate: string }) => void;
@@ -36,8 +37,8 @@ export const SeachForm: React.FC<Props> = ({
 
   const handleDateChange = (date: [Date | null, Date | null]) => {
     setSearchDate({
-      startDate: date[0]?.toString() || "",
-      endDate: date[1]?.toString() || "",
+      startDate: date[0] ? dayjs.tz(date[0]).format("YYYY-MM-DD") : "",
+      endDate: date[1] ? dayjs.tz(date[1]).format("YYYY-MM-DD") : "",
     });
   };
   return (
@@ -67,7 +68,7 @@ export const SeachForm: React.FC<Props> = ({
       </form>
       <div className="max-w-[40%] border-[1px] p-1 rounded-md mx-2 flex items-center relative">
         <DatePicker
-          // locale="ja"
+          locale="ja"
           onChange={e => handleDateChange(e)}
           dateFormatCalendar="yyyy年 MM月"
           dateFormat="yyyy/MM/dd"
@@ -79,7 +80,7 @@ export const SeachForm: React.FC<Props> = ({
           }
           selectsRange
           isClearable
-          placeholderText="日付で絞り込み"
+          placeholderText="期間で絞り込み"
         />
         {!searchDate.startDate && (
           <FontAwesomeIcon icon={faCalendar} className="absolute right-1" />
