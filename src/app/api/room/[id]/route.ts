@@ -109,8 +109,8 @@ export const GET = async (
     const page = url.searchParams.get("page");
     //初期設定する
     const fromDate = from
-      ? dayjs(from).startOf("day").toDate()
-      : dayjs().startOf("day").toDate();
+      ? dayjs.tz(from, "Asia/Tokyo").startOf("day").toDate()
+      : dayjs.tz("Asia/Tokyo").startOf("day").toDate();
     const toDate = to ? dayjs(to).endOf("day").toDate() : null;
 
     const pageSize = 30;
