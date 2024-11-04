@@ -73,6 +73,7 @@ export async function POST(
   }
 }
 
+//コメントアウトしているのはページネーション実装するときに使う
 export const GET = async (
   req: NextRequest,
   {
@@ -107,6 +108,7 @@ export const GET = async (
     const to = url.searchParams.get("to");
     const searchword = url.searchParams.get("keyword");
     // const page = url.searchParams.get("page");
+    console.log(searchword);
     //初期設定する
     const fromDate = from
       ? dayjs.tz(from).startOf("day").toDate()
@@ -121,20 +123,12 @@ export const GET = async (
         id: {
           in: taskIds,
         },
-        ...(searchword
-          ? {
-              task: {
-                task: {
-                  contains: searchword,
-                },
-              },
-            }
-          : {}),
         task: {
           date: {
             gte: fromDate,
             ...(toDate && { lte: toDate }),
           },
+          ...(searchword ? { task: { contains: searchword } } : {}),
         },
       },
       include: {
@@ -149,7 +143,6 @@ export const GET = async (
       // skip: (pageNumber - 1) * pageSize,
       // take: pageSize,
     });
-
     return NextResponse.json(
       {
         tasks: tasks.map(item => ({
