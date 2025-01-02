@@ -1,5 +1,5 @@
 "use client";
-import { faCirclePlus, faXmarkCircle } from "@fortawesome/free-solid-svg-icons";
+import { faCirclePlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Modal } from "@/app/_components/Modal";
 import { Schedule } from "./Schedule";
@@ -7,15 +7,13 @@ import { Button } from "@/app/_components/Button";
 import { Toaster } from "react-hot-toast";
 import { KeyedMutator } from "swr";
 import { IndexResponse } from "@/app/_types/room/[id]/IndexResponse";
-import { useControlTask } from "../_hooks/useControlTask";
+import { useCreateTask } from "../_hooks/useCreateTask";
 
 interface Props {
   mutate: KeyedMutator<IndexResponse>;
 }
 export const CreateButtonWithModal: React.FC<Props> = ({ mutate }) => {
   const {
-    isOpen,
-    setIsOpen,
     register,
     onClose,
     handleSubmit,
@@ -23,21 +21,18 @@ export const CreateButtonWithModal: React.FC<Props> = ({ mutate }) => {
     isSubmitting,
     schedules,
     setSchedules,
-  } = useControlTask(mutate, null, null);
+    isOpen,
+    setIsOpen,
+  } = useCreateTask({ mutate });
 
   return (
     <div className="flex justify-end pt-2 px-5">
       <Toaster position="top-right" />
       <button onClick={() => setIsOpen(true)}>
-        <FontAwesomeIcon icon={faCirclePlus} className="text-2xl" />
+        <FontAwesomeIcon icon={faCirclePlus} className="text-4xl" />
       </button>
       <Modal isOpen={isOpen} onClose={onClose} className="">
         <form className="" onSubmit={handleSubmit}>
-          <div className="flex justify-end">
-            <button onClick={onClose}>
-              <FontAwesomeIcon icon={faXmarkCircle} className="" />
-            </button>
-          </div>
           <div className="max-w-[300px] mx-auto">
             <h2 className="text-center text-xl pb-5">新規データ追加</h2>
             <div className="flex flex-col gap-3 pb-4">

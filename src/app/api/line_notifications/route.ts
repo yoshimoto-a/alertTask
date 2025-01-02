@@ -35,7 +35,6 @@ export const POST = async () => {
         },
       },
     });
-    console.log(schedules);
 
     if (!schedules || schedules.length === 0) {
       return NextResponse.json({ message: "data is null" }, { status: 200 });
@@ -69,7 +68,6 @@ export const POST = async () => {
 
     return NextResponse.json({ message: "success", result }, { status: 200 });
   } catch (e) {
-    console.log(e);
     if (e instanceof Error) {
       return NextResponse.json({ error: e.message }, { status: 400 });
     }

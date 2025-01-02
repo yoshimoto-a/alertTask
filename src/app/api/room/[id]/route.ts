@@ -107,16 +107,12 @@ export const GET = async (
     const from = url.searchParams.get("from");
     const to = url.searchParams.get("to");
     const searchword = url.searchParams.get("keyword");
-    // const page = url.searchParams.get("page");
-    console.log(searchword);
     //初期設定する
     const fromDate = from
       ? dayjs.tz(from).startOf("day").toDate()
       : dayjs.tz().startOf("day").toDate();
     const toDate = to ? dayjs.tz(to).endOf("day").toDate() : null;
 
-    // const pageSize = 30;
-    // const pageNumber = page ? parseInt(page, 10) : 1;
     const taskIds = roomDataWithTaskIds.roomTasks.map(item => item.taskId);
     const tasks = await prisma.notification.findMany({
       where: {
@@ -140,8 +136,6 @@ export const GET = async (
           date: "asc",
         },
       },
-      // skip: (pageNumber - 1) * pageSize,
-      // take: pageSize,
     });
     return NextResponse.json(
       {

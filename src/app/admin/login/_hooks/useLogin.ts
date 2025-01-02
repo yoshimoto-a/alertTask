@@ -38,7 +38,6 @@ export const useLogin = () => {
     const toastId = toast.loading("ログイン処理中...");
     try {
       const { email, password } = formdata;
-      console.log(formdata);
       const { error } = await supabase.auth.signInWithPassword({
         email,
         password,
