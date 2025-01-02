@@ -32,6 +32,5 @@ export const useLocalStorage = <T>(
       console.error(e);
     }
   };
-  console.log(value);
   return [value, setValue];
 };

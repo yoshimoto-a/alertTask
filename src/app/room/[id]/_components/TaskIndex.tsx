@@ -111,10 +111,7 @@ export const TaskIndex: React.FC<Props> = ({ taskData, mutate }) => {
       {selectedTaskId && (
         <TaskDetailModal
           isOpen={isOpen}
-          closeModal={() => {
-            setIsOpen(false);
-            setSelectedTaskId(null);
-          }}
+          setIsOpen={setIsOpen}
           mutate={mutate}
           taskId={selectedTaskId}
         />

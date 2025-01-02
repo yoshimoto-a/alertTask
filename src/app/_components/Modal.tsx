@@ -1,4 +1,7 @@
 "use client";
+
+import { faXmarkCircle } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { FC, ReactNode } from "react";
 import ReactModal from "react-modal";
 type Props = {
@@ -16,6 +19,11 @@ export const Modal: FC<Props> = ({ isOpen, onClose, className, children }) => {
       className={className}
       ariaHideApp={false}
     >
+      <div className="flex justify-end">
+        <button onClick={onClose}>
+          <FontAwesomeIcon icon={faXmarkCircle} className="" />
+        </button>
+      </div>
       {children}
     </ReactModal>
   );

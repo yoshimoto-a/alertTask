@@ -19,8 +19,12 @@ export const RoomIndex: React.FC = () => {
   return (
     <div className="max-w-md mx-auto relative">
       <div className="mx-2 w-full">
-        <h2 className="text-xl py-5">予定一覧</h2>
-
+        <div className="flex justify-between items-center">
+          <h2 className="text-xl py-5">予定一覧</h2>
+          <div className="text-[8px]">
+            2025/1/2:編集モーダルに日付表示されないバグ修正
+          </div>
+        </div>
         <div className="flex justify-end items-center w-full px-5">
           <SeachForm
             searchDate={searchDate}
