@@ -112,6 +112,7 @@ export const GET = async (
     const response = {
       name: taskDetail.task,
       date: taskDetail.date,
+      color: taskDetail.color,
       schedules,
     };
 
@@ -159,7 +160,7 @@ export async function PUT(
 
       //タスクを更新
       const body: PutRequest = await req.json();
-      const { date, task, schedules } = body;
+      const { date, task, schedules, color } = body;
       const TaskData = await prisma.task.update({
         where: {
           id: Number(taskId),
@@ -167,6 +168,7 @@ export async function PUT(
         data: {
           date,
           task,
+          color,
         },
       });
 

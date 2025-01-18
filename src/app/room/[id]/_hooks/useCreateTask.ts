@@ -7,6 +7,7 @@ import { useParams } from "next/navigation";
 import toast from "react-hot-toast";
 import { KeyedMutator } from "swr";
 import { useTaskForm } from "./useTaskForm";
+import { Color } from "@prisma/client";
 interface Task {
   date: string;
   task: string;
@@ -23,6 +24,7 @@ export const useCreateTask = <T>({ mutate }: { mutate: KeyedMutator<T> }) => {
   } = useTaskForm<Task>();
 
   const [isOpen, setIsOpen] = useState(false);
+  const [color, setColor] = useState<Color>("BLUE");
   const { post } = useApi();
   const params = useParams();
 
@@ -30,6 +32,7 @@ export const useCreateTask = <T>({ mutate }: { mutate: KeyedMutator<T> }) => {
     const body = {
       date: new Date(formdata.date),
       task: formdata.task,
+      color: color,
       schedules: schedules.map(item => ({
         daysBefore: Number(item.daysBefore),
         hour: Number(item.hour?.value),
@@ -66,5 +69,7 @@ export const useCreateTask = <T>({ mutate }: { mutate: KeyedMutator<T> }) => {
     onClose,
     isOpen,
     setIsOpen,
+    color,
+    setColor,
   };
 };

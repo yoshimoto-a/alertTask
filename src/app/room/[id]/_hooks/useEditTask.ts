@@ -9,6 +9,7 @@ import { useTaskForm } from "./useTaskForm";
 import dayjs from "dayjs";
 
 import { DetailResponse } from "@/app/_types/task/DetailResponse";
+import { Color } from "@prisma/client";
 
 interface Task {
   date: string;
@@ -19,11 +20,15 @@ export const useEditTask = <T>({
   taskId,
   setIsOpen,
   data,
+  color,
+  setColor,
 }: {
   mutate: KeyedMutator<T>;
   taskId: number;
   setIsOpen: (isOpen: boolean) => void;
   data: DetailResponse | undefined;
+  color: Color;
+  setColor: (color: Color) => void;
 }) => {
   const {
     register,
@@ -44,6 +49,7 @@ export const useEditTask = <T>({
       date: dayjs(data.date).format("YYYY-MM-DD"),
       task: data.name,
     });
+    setColor(data.color);
   }, [data, reset]);
   const { del, put } = useApi();
   useEffect(() => {
@@ -61,6 +67,7 @@ export const useEditTask = <T>({
     const body = {
       date: new Date(formdata.date),
       task: formdata.task,
+      color: color,
       schedules: schedules.map(item => ({
         daysBefore: Number(item.daysBefore),
         hour: Number(item.hour?.value),
@@ -99,5 +106,7 @@ export const useEditTask = <T>({
     setSchedules,
     deleteTask,
     reset,
+    color,
+    setColor,
   };
 };
