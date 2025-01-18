@@ -4,15 +4,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Modal } from "@/app/_components/Modal";
 import { Schedule } from "./Schedule";
 import { Button } from "@/app/_components/Button";
-import { Toaster } from "react-hot-toast";
 import { KeyedMutator } from "swr";
-import { IndexResponse } from "@/app/_types/room/[id]/IndexResponse";
 import { useCreateTask } from "../_hooks/useCreateTask";
 
-interface Props {
-  mutate: KeyedMutator<IndexResponse>;
+interface Props<T> {
+  mutate: KeyedMutator<T>;
 }
-export const CreateButtonWithModal: React.FC<Props> = ({ mutate }) => {
+
+export const CreateButtonWithModal = <T,>({ mutate }: Props<T>) => {
   const {
     register,
     onClose,
@@ -27,7 +26,6 @@ export const CreateButtonWithModal: React.FC<Props> = ({ mutate }) => {
 
   return (
     <div className="flex justify-end pt-2 px-5">
-      <Toaster position="top-right" />
       <button onClick={() => setIsOpen(true)}>
         <FontAwesomeIcon icon={faCirclePlus} className="text-4xl" />
       </button>

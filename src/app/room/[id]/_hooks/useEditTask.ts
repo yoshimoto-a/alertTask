@@ -8,6 +8,8 @@ import { KeyedMutator } from "swr";
 import { IndexResponse } from "@/app/_types/room/[id]/IndexResponse";
 import { useTaskForm } from "./useTaskForm";
 import dayjs from "dayjs";
+import { IndexResponse as calendarResponse } from "@/app/_types/room/[id]/calendar/IndexResponse";
+
 import { DetailResponse } from "@/app/_types/task/DetailResponse";
 
 interface Task {
@@ -20,7 +22,7 @@ export const useEditTask = ({
   setIsOpen,
   data,
 }: {
-  mutate: KeyedMutator<IndexResponse>;
+  mutate: KeyedMutator<IndexResponse | calendarResponse>;
   taskId: number;
   setIsOpen: (isOpen: boolean) => void;
   data: DetailResponse | undefined;

@@ -6,17 +6,12 @@ import { PostResponse } from "@/app/_types/room/[id]/PostResponse";
 import { useParams } from "next/navigation";
 import toast from "react-hot-toast";
 import { KeyedMutator } from "swr";
-import { IndexResponse } from "@/app/_types/room/[id]/IndexResponse";
 import { useTaskForm } from "./useTaskForm";
 interface Task {
   date: string;
   task: string;
 }
-export const useCreateTask = ({
-  mutate,
-}: {
-  mutate: KeyedMutator<IndexResponse>;
-}) => {
+export const useCreateTask = <T>({ mutate }: { mutate: KeyedMutator<T> }) => {
   const {
     register,
     handleSubmit,

@@ -4,13 +4,14 @@ import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { KeyedMutator } from "swr";
 import { IndexResponse } from "@/app/_types/room/[id]/IndexResponse";
+import { IndexResponse as calendarResponse } from "@/app/_types/room/[id]/calendar/IndexResponse";
 import { Schedule } from "./Schedule";
 import { Button } from "@/app/_components/Button";
 import { useEditTask } from "../_hooks/useEditTask";
 import { useTask } from "../_hooks/useTask";
 
 interface Props {
-  mutate: KeyedMutator<IndexResponse>;
+  mutate: KeyedMutator<IndexResponse | calendarResponse>;
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
   taskId: number;
