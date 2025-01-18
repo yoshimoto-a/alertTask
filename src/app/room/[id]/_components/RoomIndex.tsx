@@ -30,19 +30,22 @@ export const RoomIndex: React.FC = () => {
         <div className="flex justify-between items-center">
           <h2 className="text-xl py-5">予定一覧</h2>
         </div>
-        <div className="flex justify-between items-center gap-2 w-full pr-1">
-          <Button type="button" onClick={() => push(`/room/${id}/calendar`)}>
-            <span className="pr-2">カレンダー</span>
-            <FontAwesomeIcon
-              icon={faCalendar}
-              className="text-2xl text-white"
+        <div className="flex flex-row justify-end items-center gap-2 w-full pr-1">
+          <div className="flex flex-col gap-2">
+            <SeachForm
+              searchDate={searchDate}
+              setSearchDate={setSearchDate}
+              setSearchKeyword={setSearchKeyword}
             />
-          </Button>
-          <SeachForm
-            searchDate={searchDate}
-            setSearchDate={setSearchDate}
-            setSearchKeyword={setSearchKeyword}
-          />
+
+            <Button type="button" onClick={() => push(`/room/${id}/calendar`)}>
+              <span className="pr-2">カレンダー</span>
+              <FontAwesomeIcon
+                icon={faCalendar}
+                className="text-2xl text-white"
+              />
+            </Button>
+          </div>
         </div>
 
         {isLoading ? (
