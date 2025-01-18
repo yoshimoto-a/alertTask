@@ -2,6 +2,7 @@ import { Task } from "@/app/_types/room/[id]/calendar/IndexResponse";
 import { useEditTask } from "../_hooks/useEditTask";
 import { TaskDetailModal } from "../../_components/TaskDetailModal";
 import { useCalendar } from "../_hooks/useCalendar";
+import { IndexResponse } from "@/app/_types/room/[id]/calendar/IndexResponse";
 interface Props {
   task: Task;
 }
@@ -18,7 +19,7 @@ export const TaskItem: React.FC<Props> = ({ task }) => {
       >
         {task.task}
       </div>
-      <TaskDetailModal
+      <TaskDetailModal<IndexResponse>
         mutate={mutate}
         isOpen={isOpen}
         setIsOpen={setIsOpen}

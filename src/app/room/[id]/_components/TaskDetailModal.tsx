@@ -3,25 +3,23 @@ import { Modal } from "@/app/_components/Modal";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { KeyedMutator } from "swr";
-import { IndexResponse } from "@/app/_types/room/[id]/IndexResponse";
-import { IndexResponse as calendarResponse } from "@/app/_types/room/[id]/calendar/IndexResponse";
 import { Schedule } from "./Schedule";
 import { Button } from "@/app/_components/Button";
 import { useEditTask } from "../_hooks/useEditTask";
 import { useTask } from "../_hooks/useTask";
 
-interface Props {
-  mutate: KeyedMutator<IndexResponse | calendarResponse>;
+interface Props<T> {
+  mutate: KeyedMutator<T>;
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
   taskId: number;
 }
-export const TaskDetailModal: React.FC<Props> = ({
+export const TaskDetailModal = <T,>({
   setIsOpen,
   isOpen,
   mutate,
   taskId,
-}) => {
+}: Props<T>) => {
   const { data } = useTask(taskId);
   const {
     register,
@@ -31,7 +29,7 @@ export const TaskDetailModal: React.FC<Props> = ({
     schedules,
     setSchedules,
     deleteTask,
-  } = useEditTask({ mutate, taskId, setIsOpen, data });
+  } = useEditTask<T>({ mutate, taskId, setIsOpen, data });
 
   return (
     <Modal isOpen={isOpen} onClose={() => setIsOpen(false)} className="">

@@ -6,7 +6,7 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import { Task } from "@/app/_types/room/[id]/IndexResponse";
-import { IndexResponse } from "@/app/_types/room/[id]/IndexResponse";
+
 import { KeyedMutator } from "swr";
 import { dayjs } from "@/app/_utils/dayjs";
 import { TaskDetailModal } from "./TaskDetailModal";
@@ -40,12 +40,12 @@ const columns = [
     },
   }),
 ];
-interface Props {
+interface Props<T> {
   taskData: Task[];
-  mutate: KeyedMutator<IndexResponse>;
+  mutate: KeyedMutator<T>;
 }
 
-export const TaskIndex: React.FC<Props> = ({ taskData, mutate }) => {
+export const TaskIndex = <T,>({ mutate, taskData }: Props<T>) => {
   const table = useReactTable({
     data: taskData || [],
     columns,
@@ -109,7 +109,7 @@ export const TaskIndex: React.FC<Props> = ({ taskData, mutate }) => {
         </tbody>
       </table>
       {selectedTaskId && (
-        <TaskDetailModal
+        <TaskDetailModal<T>
           isOpen={isOpen}
           setIsOpen={setIsOpen}
           mutate={mutate}

@@ -5,10 +5,8 @@ import { PutRequest } from "@/app/_types/task/PutRequest";
 import { PutResponse } from "@/app/_types/task/PutResponse";
 import toast from "react-hot-toast";
 import { KeyedMutator } from "swr";
-import { IndexResponse } from "@/app/_types/room/[id]/IndexResponse";
 import { useTaskForm } from "./useTaskForm";
 import dayjs from "dayjs";
-import { IndexResponse as calendarResponse } from "@/app/_types/room/[id]/calendar/IndexResponse";
 
 import { DetailResponse } from "@/app/_types/task/DetailResponse";
 
@@ -16,13 +14,13 @@ interface Task {
   date: string;
   task: string;
 }
-export const useEditTask = ({
+export const useEditTask = <T>({
   mutate,
   taskId,
   setIsOpen,
   data,
 }: {
-  mutate: KeyedMutator<IndexResponse | calendarResponse>;
+  mutate: KeyedMutator<T>;
   taskId: number;
   setIsOpen: (isOpen: boolean) => void;
   data: DetailResponse | undefined;
