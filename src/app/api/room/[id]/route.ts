@@ -27,11 +27,12 @@ export async function POST(
 
       //タスクを登録
       const body: PostRequest = await req.json();
-      const { date, task, schedules } = body;
+      const { date, task, schedules, color } = body;
       const TaskData = await prisma.task.create({
         data: {
-          date: date,
-          task: task,
+          date,
+          task,
+          color,
         },
       });
 

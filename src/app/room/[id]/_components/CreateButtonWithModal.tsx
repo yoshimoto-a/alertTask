@@ -6,7 +6,7 @@ import { Schedule } from "./Schedule";
 import { Button } from "@/app/_components/Button";
 import { KeyedMutator } from "swr";
 import { useCreateTask } from "../_hooks/useCreateTask";
-
+import { ColorSelect } from "./ColorSelect";
 interface Props<T> {
   mutate: KeyedMutator<T>;
 }
@@ -22,6 +22,8 @@ export const CreateButtonWithModal = <T,>({ mutate }: Props<T>) => {
     setSchedules,
     isOpen,
     setIsOpen,
+    color,
+    setColor,
   } = useCreateTask({ mutate });
 
   return (
@@ -61,6 +63,7 @@ export const CreateButtonWithModal = <T,>({ mutate }: Props<T>) => {
                 </span>
               )}
               <Schedule schedules={schedules} setSchedules={setSchedules} />
+              <ColorSelect color={color} setColor={setColor} />
             </div>
             <Button type="submit">登録</Button>
           </div>

@@ -45,6 +45,7 @@ export const GET = async (
           taskId: item.id,
           date: item.date,
           task: item.task,
+          color: item.color,
         })),
       },
 

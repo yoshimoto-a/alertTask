@@ -27,6 +27,7 @@ model Task {
   id        Int      @id @default(autoincrement())
   date      DateTime
   task      String
+  color     Color    @default(BLUE)
   // RoomTaskとのリレーション
   roomTasks RoomTask[]
 
@@ -74,4 +75,14 @@ model Schedule {
   datetime    DateTime @default(now()) 
   notificationId Int
   notification   Notification @relation(fields: [notificationId], references: [id])
+}
+
+
+enum Color {
+  RED
+  PINK
+  BLUE
+  GREEN
+  YELLOW
+  PURPLE
 }

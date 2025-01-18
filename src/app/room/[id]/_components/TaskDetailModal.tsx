@@ -7,7 +7,9 @@ import { Schedule } from "./Schedule";
 import { Button } from "@/app/_components/Button";
 import { useEditTask } from "../_hooks/useEditTask";
 import { useTask } from "../_hooks/useTask";
-
+import { ColorSelect } from "./ColorSelect";
+import { useEffect, useState } from "react";
+import { Color } from "@prisma/client";
 interface Props<T> {
   mutate: KeyedMutator<T>;
   isOpen: boolean;
@@ -21,6 +23,11 @@ export const TaskDetailModal = <T,>({
   taskId,
 }: Props<T>) => {
   const { data } = useTask(taskId);
+  const [color, setColor] = useState<Color>("BLUE");
+  useEffect(() => {
+    if (!data) return;
+    setColor(data.color);
+  }, [data]);
   const {
     register,
     handleSubmit,
@@ -29,7 +36,7 @@ export const TaskDetailModal = <T,>({
     schedules,
     setSchedules,
     deleteTask,
-  } = useEditTask<T>({ mutate, taskId, setIsOpen, data });
+  } = useEditTask<T>({ mutate, taskId, setIsOpen, data, color, setColor });
 
   return (
     <Modal isOpen={isOpen} onClose={() => setIsOpen(false)} className="">
@@ -69,6 +76,7 @@ export const TaskDetailModal = <T,>({
               </span>
             )}
             <Schedule schedules={schedules} setSchedules={setSchedules} />
+            <ColorSelect color={color} setColor={setColor}></ColorSelect>
           </div>
           <Button type="submit">登録</Button>
         </div>
